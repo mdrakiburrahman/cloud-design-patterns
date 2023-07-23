@@ -18,10 +18,12 @@ namespace Contoso
             };
             blobSasBuilder.SetPermissions(BlobSasPermissions.Read);
 
-            //Generate the shared access signature on the blob, setting the constraints directly on the signature.
+            // Generate the shared access signature on the blob, setting the constraints directly on the signature.
+            //
             Uri sasUri = blob.GenerateSasUri(blobSasBuilder);
 
-            //Return the URI string for the container, including the SAS token.
+            // Return the URI string for the container, including the SAS token.
+            //
             return sasUri.ToString();
         }
     }

@@ -14,8 +14,10 @@ namespace Contoso
         [FunctionName("AsyncProcessingWorkAcceptor")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] CustomerPOCO customer,
-            [ServiceBus("outqueue", Connection = "ServiceBusConnectionAppSetting")] IAsyncCollector<ServiceBusMessage> OutMessages,
-            ILogger log)
+            [ServiceBus("outqueue", Connection = "ServiceBusConnectionAppSetting")]
+                IAsyncCollector<ServiceBusMessage> OutMessages,
+            ILogger log
+        )
         {
             if (String.IsNullOrEmpty(customer.id) || string.IsNullOrEmpty(customer.customername))
             {
@@ -23,8 +25,9 @@ namespace Contoso
             }
 
             string reqid = Guid.NewGuid().ToString();
-            
-            string rqs = $"http://{Environment.GetEnvironmentVariable("WEBSITE_HOSTNAME")}/api/RequestStatus/{reqid}";
+
+            string rqs =
+                $"http://{Environment.GetEnvironmentVariable("WEBSITE_HOSTNAME")}/api/RequestStatus/{reqid}";
 
             var messagePayload = JsonConvert.SerializeObject(customer);
             var message = new ServiceBusMessage(messagePayload);
@@ -34,7 +37,10 @@ namespace Contoso
 
             await OutMessages.AddAsync(message);
 
-            return new AcceptedResult(rqs, $"Request Accepted for Processing{Environment.NewLine}ProxyStatus: {rqs}");
+            return new AcceptedResult(
+                rqs,
+                $"Request Accepted for Processing{Environment.NewLine}ProxyStatus: {rqs}"
+            );
         }
     }
 }

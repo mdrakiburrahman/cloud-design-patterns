@@ -107,7 +107,7 @@ namespace Contoso
                 case OnCompleteEnum.Redirect:
                 {
                     // Redirect to the SAS URI to blob storage
-
+                    //
                     return new RedirectResult(inputBlob.GenerateSASURI());
                 }
 
@@ -115,6 +115,7 @@ namespace Contoso
                 {
                     // Download the file and return it directly to the caller.
                     // For larger files, use a stream to minimize RAM usage.
+                    //
                     return new OkObjectResult(await inputBlob.DownloadContentAsync());
                 }
 

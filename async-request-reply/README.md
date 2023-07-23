@@ -8,6 +8,8 @@ For more information about this pattern, see [Asynchronous Request-Reply pattern
 
 ## Deploying the sample
 
+![Azure Resources](_imgs/azure-resources.png)
+
 ### Prerequisites
 
 - [Azure CLI](https://docs.microsoft.com/cli/azure/install-azure-cli?view=azure-cli-latest)
@@ -54,6 +56,14 @@ For more information about this pattern, see [Asynchronous Request-Reply pattern
     func azure functionapp publish $FUNC_APP_NAME --dotnet
     ```
 
+    or on Windows:
+
+    ```powershell
+    $FUNC_APP_NAME = az deployment group show -g rg-asyncrequestreply -n deploy --query properties.outputs.functionAppName.value -o tsv
+
+    func azure functionapp publish $FUNC_APP_NAME --dotnet
+    ```
+
 ### Validate the Azure Function app
 
 1. Send an http request through the Async Processor Work Acceptor
@@ -77,7 +87,7 @@ For more information about this pattern, see [Asynchronous Request-Reply pattern
 ### Running localy
 You could open the solution with  Visual Studio, then you need to create on the root `local.settings.json`
 
-```
+```json
 {
   "IsEncrypted": false,
   "Values": {
@@ -88,3 +98,5 @@ You could open the solution with  Visual Studio, then you need to create on the 
   }
 }
 ```
+
+![Running Locally](_imgs/local-run.png)
